@@ -1,7 +1,12 @@
 # LinkedIn İçerik Otomasyon Platformu
 
 Kurumsal firmalara sunulmak üzere geliştirilen LinkedIn içerik paylaşım platformu. Kullanıcılar, LinkedIn içeriklerini üretip doğrudan paylaşabilir veya zamanlayabilirler. Tüm içerik oluşturma ve paylaşım süreçleri n8n otomasyonları üzerinden çalışır.
+## 📞 İletişim
 
+Proje hakkında sorularınız için:
+- Email: socialhub@atalga.com
+- Website: https://socialhub.atalga.com  https://atalga.com  
+- 
 ## 🚀 Özellikler
 
 - **4 Farklı İçerik Üretim Senaryosu:**
@@ -233,11 +238,7 @@ Kullanıcı metin → Direkt yayınla/zamanla
 
 Bu proje MIT lisansı altında lisanslanmıştır.
 
-## 📞 İletişim
 
-Proje hakkında sorularınız için:
-- Email: support@socialhub.com
-- Website: https://socialhub.atalga.com
 
 ---
 
