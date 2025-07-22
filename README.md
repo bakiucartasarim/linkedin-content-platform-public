@@ -5,7 +5,8 @@ Kurumsal firmalara sunulmak üzere geliştirilen LinkedIn içerik paylaşım pla
 
 Proje hakkında sorularınız için:
 - Email: socialhub@atalga.com
-- Website: https://socialhub.atalga.com  https://atalga.com  
+- Website: https://socialhub.atalga.com
+-          https://atalga.com  
 - 
 ## 🚀 Özellikler
 
