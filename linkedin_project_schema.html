@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn İçerik Otomasyon Platformu - Proje Şeması</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0077B5 0%, #005885 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0077B5 0%, #005885 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: #0077B5;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #0077B5;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before {
+            content: '🔹';
+            margin-right: 10px;
+        }
+        
+        .schema-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .schema-card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .schema-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,119,181,0.15);
+            border-color: #0077B5;
+        }
+        
+        .schema-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0077B5, #4FC3F7);
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-icon {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .card-content {
+            color: #64748b;
+            line-height: 1.6;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .tech-tag {
+            background: #0077B5;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .flow-diagram {
+            background: #f1f5f9;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .step-number {
+            background: #0077B5;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+        
+        .step-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        .arrow {
+            text-align: center;
+            color: #0077B5;
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+        
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .api-table th {
+            background: #0077B5;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .api-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .api-table tr:hover {
+            background: #f8fafc;
+        }
+        
+        .method-tag {
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .method-post { background: #10b981; color: white; }
+        .method-get { background: #3b82f6; color: white; }
+        .method-put { background: #f59e0b; color: white; }
+        .method-delete { background: #ef4444; color: white; }
+        
+        .database-schema {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .table-schema {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #0077B5;
+        }
+        
+        .table-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0077B5;
+            margin-bottom: 10px;
+        }
+        
+        .field-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        
+        .field-item {
+            background: #f1f5f9;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #374151;
+        }
+        
+        .print-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #0077B5;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,119,181,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .print-btn:hover {
+            background: #005885;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(0,119,181,0.4);
+        }
+        
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; }
+            .print-btn { display: none; }
+        }
+        
+        @media (max-width: 768px) {
+            .content { padding: 20px; }
+            .schema-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 LinkedIn İçerik Otomasyon Platformu</h1>
+            <p>Kurumsal Firmalara Yönelik İçerik Üretim ve Paylaşım Sistemi</p>
+        </div>
+        
+        <div class="content">
+            <!-- Genel Bakış -->
+            <div class="section">
+                <h2 class="section-title">Genel Bakış</h2>
+                <div class="schema-grid">
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">🎯</span>
+                            Amaç
+                        </h3>
+                        <div class="card-content">
+                            Kurumsal firmalara LinkedIn içerik üretimi ve paylaşımı için tam otomatik çözüm sunmak. n8n otomasyonları ile AI destekli içerik üretimi.
+                        </div>
+                    </div>
+                    
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">⚡</span>
+                            Temel Özellikler
+                        </h3>
+                        <div class="card-content">
+                            • 4 farklı içerik üretim senaryosu<br>
+                            • AI destekli görsel ve metin önerileri<br>
+                            • Anında veya zamanlanmış paylaşım<br>
+                            • Tam n8n entegrasyonu
+                        </div>
+                    </div>
+                    
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">👥</span>
+                            Hedef Kitle
+                        </h3>
+                        <div class="card-content">
+                            • Kurumsal şirketler<br>
+                            • Dijital pazarlama ajansları<br>
+                            • İçerik üreticileri<br>
+                            • LinkedIn uzmanları
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Teknoloji Stack -->
+            <div class="section">
+                <h2 class="section-title">Teknoloji Stack</h2>
+                <div class="schema-grid">
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">🖥️</span>
+                            Frontend
+                        </h3>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Next.js 14</span>
+                            <span class="tech-tag">React 18</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">Tailwind CSS</span>
+                            <span class="tech-tag">Lucide Icons</span>
+                        </div>
+                    </div>
+                    
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">⚙️</span>
+                            Backend
+                        </h3>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Next.js API</span>
+                            <span class="tech-tag">NextAuth.js</span>
+                            <span class="tech-tag">Prisma ORM</span>
+                            <span class="tech-tag">n8n Webhooks</span>
+                            <span class="tech-tag">Server Actions</span>
+                        </div>
+                    </div>
+                    
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">🗄️</span>
+                            Veritabanı
+                        </h3>
+                        <div class="tech-stack">
+                            <span class="tech-tag">PostgreSQL</span>
+                            <span class="tech-tag">Prisma</span>
+                            <span class="tech-tag">JWT Sessions</span>
+                        </div>
+                    </div>
+                    
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">🚀</span>
+                            Deployment
+                        </h3>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Coolify</span>
+                            <span class="tech-tag">GitHub CI/CD</span>
+                            <span class="tech-tag">HTTPS</span>
+                            <span class="tech-tag">Domain</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- İçerik Üretim Akışı -->
+            <div class="section">
+                <h2 class="section-title">İçerik Üretim Akışları</h2>
+                
+                <div class="flow-diagram">
+                    <h3 style="color: #0077B5; margin-bottom: 20px; font-weight: 600;">1. Otomatik Başlatılan Süreç</h3>
+                    <div class="flow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <div class="step-title">Süreç Başlatma</div>
+                            <div class="step-desc">Kullanıcı otomatik içerik üretimini başlatır</div>
+                        </div>
+                    </div>
+                    <div class="arrow">⬇️</div>
+                    <div class="flow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <div class="step-title">n8n Görsel Önerisi</div>
+                            <div class="step-desc">AI tarafından görsel üretilir ve kullanıcıya sunulur</div>
+                        </div>
+                    </div>
+                    <div class="arrow">⬇️</div>
+                    <div class="flow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <div class="step-title">Görsel Onayı</div>
+                            <div class="step-desc">Kullanıcı onaylar veya yeni öneri ister</div>
+                        </div>
+                    </div>
+                    <div class="arrow">⬇️</div>
+                    <div class="flow-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <div class="step-title">n8n Metin Önerisi</div>
+                            <div class="step-desc">Görsele uygun metin içeriği üretilir</div>
+                        </div>
+                    </div>
+                    <div class="arrow">⬇️</div>
+                    <div class="flow-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <div class="step-title">Final Onay ve Yayın</div>
+                            <div class="step-desc">İçerik onaylanır ve LinkedIn'e yayınlanır/zamanlanır</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="schema-grid" style="margin-top: 30px;">
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">🖼️</span>
+                            Görsel İlk Süreç
+                        </h3>
+                        <div class="card-content">
+                            Kullanıcı görsel yükler → n8n metin önerisi → Onay → Yayın
+                        </div>
+                    </div>
+                    
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">📝</span>
+                            Metin İlk Süreç
+                        </h3>
+                        <div class="card-content">
+                            Kullanıcı metin girer → n8n görsel önerisi → Onay → Yayın
+                        </div>
+                    </div>
+                    
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">✍️</span>
+                            Sadece Metin
+                        </h3>
+                        <div class="card-content">
+                            Kullanıcı metin girer → Direkt yayın/zamanlama
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Veritabanı Şeması -->
+            <div class="section">
+                <h2 class="section-title">Veritabanı Şeması</h2>
+                <div class="database-schema">
+                    <div class="table-schema">
+                        <div class="table-name">👤 User</div>
+                        <div class="field-list">
+                            <div class="field-item">id: String (PK)</div>
+                            <div class="field-item">email: String (Unique)</div>
+                            <div class="field-item">name: String</div>
+                            <div class="field-item">password: String</div>
+                            <div class="field-item">createdAt: DateTime</div>
+                            <div class="field-item">updatedAt: DateTime</div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-schema">
+                        <div class="table-name">🔗 N8nConfig</div>
+                        <div class="field-list">
+                            <div class="field-item">id: String (PK)</div>
+                            <div class="field-item">userId: String (FK)</div>
+                            <div class="field-item">webhookUrl: String</div>
+                            <div class="field-item">authToken: String</div>
+                            <div class="field-item">createdAt: DateTime</div>
+                            <div class="field-item">updatedAt: DateTime</div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-schema">
+                        <div class="table-name">🎨 ContentSession</div>
+                        <div class="field-list">
+                            <div class="field-item">id: String (PK)</div>
+                            <div class="field-item">userId: String (FK)</div>
+                            <div class="field-item">type: String</div>
+                            <div class="field-item">status: Enum</div>
+                            <div class="field-item">userInput: String?</div>
+                            <div class="field-item">suggestions: JSON?</div>
+                            <div class="field-item">finalContent: JSON?</div>
+                            <div class="field-item">publishedAt: DateTime?</div>
+                            <div class="field-item">scheduledAt: DateTime?</div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-schema">
+                        <div class="table-name">📄 Post</div>
+                        <div class="field-list">
+                            <div class="field-item">id: String (PK)</div>
+                            <div class="field-item">userId: String (FK)</div>
+                            <div class="field-item">sessionId: String (FK)</div>
+                            <div class="field-item">content: String</div>
+                            <div class="field-item">imageUrl: String?</div>
+                            <div class="field-item">status: Enum</div>
+                            <div class="field-item">linkedinPostId: String?</div>
+                            <div class="field-item">publishedAt: DateTime?</div>
+                            <div class="field-item">scheduledAt: DateTime?</div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-schema">
+                        <div class="table-name">✅ ApprovalLog</div>
+                        <div class="field-list">
+                            <div class="field-item">id: String (PK)</div>
+                            <div class="field-item">sessionId: String (FK)</div>
+                            <div class="field-item">userId: String (FK)</div>
+                            <div class="field-item">suggestionType: String</div>
+                            <div class="field-item">approved: Boolean</div>
+                            <div class="field-item">rejectionReason: String?</div>
+                            <div class="field-item">response: JSON?</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- API Endpoints -->
+            <div class="section">
+                <h2 class="section-title">API Endpoints</h2>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Endpoint</th>
+                            <th>Açıklama</th>
+                            <th>Auth</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="method-tag method-post">POST</span></td>
+                            <td>/api/register</td>
+                            <td>Kullanıcı kaydı</td>
+                            <td>❌</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method-tag method-post">POST</span></td>
+                            <td>/api/auth/[...nextauth]</td>
+                            <td>NextAuth giriş/çıkış</td>
+                            <td>❌</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method-tag method-post">POST</span></td>
+                            <td>/api/n8n</td>
+                            <td>n8n ayarları kaydetme</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method-tag method-get">GET</span></td>
+                            <td>/api/n8n</td>
+                            <td>n8n ayarları getirme</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method-tag method-post">POST</span></td>
+                            <td>/api/content</td>
+                            <td>İçerik üretimi başlatma</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method-tag method-get">GET</span></td>
+                            <td>/api/content</td>
+                            <td>İçerik durumu sorgulama</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method-tag method-post">POST</span></td>
+                            <td>/api/content/approve</td>
+                            <td>Öneri onaylama/reddetme</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method-tag method-post">POST</span></td>
+                            <td>/api/content/publish</td>
+                            <td>İçerik yayınlama/zamanlama</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method-tag method-get">GET</span></td>
+                            <td>/api/posts</td>
+                            <td>Paylaşım geçmişi</td>
+                            <td>✅</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Sayfa Yapısı -->
+            <div class="section">
+                <h2 class="section-title">Sayfa Yapısı</h2>
+                <div class="schema-grid">
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">🔐</span>
+                            Kimlik Doğrulama
+                        </h3>
+                        <div class="card-content">
+                            • <strong>/auth/signin</strong> - Giriş sayfası<br>
+                            • <strong>/auth/signup</strong> - Kayıt sayfası<br>
+                            • NextAuth.js ile güvenli oturum yönetimi
+                        </div>
+                    </div>
+                    
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">🏠</span>
+                            Ana Sayfalar
+                        </h3>
+                        <div class="card-content">
+                            • <strong>/dashboard</strong> - İçerik oluşturma paneli<br>
+                            • <strong>/settings</strong> - n8n webhook ayarları<br>
+                            • <strong>/history</strong> - Paylaşım geçmişi
+                        </div>
+                    </div>
+                    
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">🎨</span>
+                            Bileşenler
+                        </h3>
+                        <div class="card-content">
+                            • <strong>DashboardLayout</strong> - Ana layout<br>
+                            • <strong>ContentCreationModal</strong> - İçerik oluşturma modalı<br>
+                            • Form ve UI bileşenleri
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- n8n Entegrasyonu -->
+            <div class="section">
+                <h2 class="section-title">n8n Entegrasyon Detayları</h2>
+                <div class="schema-grid">
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">🔗</span>
+                            Webhook Yapısı
+                        </h3>
+                        <div class="card-content">
+                            • Her kullanıcının kendi n8n webhook'u<br>
+                            • Auth token ile güvenlik<br>
+                            • JSON payload ile veri transferi<br>
+                            • Timeout ve error handling
+                        </div>
+                    </div>
+                    
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">🤖</span>
+                            AI Entegrasyonu
+                        </h3>
+                        <div class="card-content">
+                            • ChatGPT/OpenAI API entegrasyonu<br>
+                            • DALL-E görsel üretimi<br>
+                            • Özelleştirilebilir promptlar<br>
+                            • Çoklu öneri sistemi
+                        </div>
+                    </div>
+                    
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">📲</span>
+                            LinkedIn API
+                        </h3>
+                        <div class="card-content">
+                            • LinkedIn Share API<br>
+                            • Görsel ve metin paylaşımı<br>
+                            • Zamanlanmış paylaşım<br>
+                            • Post ID takibi
+                        </div>
+                    </div>
+                    
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">⚡</span>
+                            Workflow Adımları
+                        </h3>
+                        <div class="card-content">
+                            1. Webhook trigger<br>
+                            2. AI content generation<br>
+                            3. User approval process<br>
+                            4. LinkedIn publishing<br>
+                            5. Response logging
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Güvenlik ve Deployment -->
+            <div class="section">
+                <h2 class="section-title">Güvenlik ve Deployment</h2>
+                <div class="schema-grid">
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">🛡️</span>
+                            Güvenlik Önlemleri
+                        </h3>
+                        <div class="card-content">
+                            • NextAuth.js ile güvenli kimlik doğrulama<br>
+                            • Bcrypt şifre hashleme<br>
+                            • JWT session yönetimi<br>
+                            • HTTPS zorunluluğu<br>
+                            • n8n webhook auth token koruması
+                        </div>
+                    </div>
+                    
+                    <div class="schema-card">
+                        <h3 class="card-title">
+                            <span class="card-icon">🚀
